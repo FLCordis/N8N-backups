@@ -1,0 +1,508 @@
+{
+  "name": "FERRAMENTA TESTE - Backup GitHub",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "file",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Data').first().json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Data').first().json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "=newstandard/{{ $('Workflow New').item.json.id }}.json",
+        "binaryData": true,
+        "commitMessage": "={{ $('Workflow New').item.json.name }} [{{ $now.setZone('UTC').toFormat('yyyy-MM-dd') }}T{{ $now.setZone('America/Sao_Paulo').toFormat('hh:mm') }}]"
+      },
+      "id": "6cb2b9bc-cb08-4f3f-912b-dd2d75a36cd1",
+      "name": "Create File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        4500,
+        1140
+      ],
+      "credentials": {
+        "githubApi": {
+          "id": "2Ut60Rr0XFajvAxS",
+          "name": "teste"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Data').item.json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Data').item.json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $('Data').item.json.path }}{{ $('Get Workflows').item.json.id }}.json",
+        "additionalParameters": {}
+      },
+      "id": "81b8821a-5bad-4a70-9131-3a00887bec61",
+      "name": "Find File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        3400,
+        820
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "githubApi": {
+          "id": "2Ut60Rr0XFajvAxS",
+          "name": "teste"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "409c062f-1a22-4180-b5e0-5155e729e1bc",
+              "name": "owner",
+              "value": "NSFMagalhaes",
+              "type": "string"
+            },
+            {
+              "id": "0aaea702-052f-4388-8afe-c88478f13bc0",
+              "name": "repo",
+              "value": "backup-n8n",
+              "type": "string"
+            },
+            {
+              "id": "353765da-36cb-479b-b907-eb1cba3ea9bd",
+              "name": "path",
+              "value": "newstandard/",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fb4ed66d-94e6-485c-82ac-43718de55818",
+      "name": "Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2920,
+        920
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cdf0f962-1982-4f49-8c6d-defe8bedb4ae",
+              "name": "data",
+              "value": "={{$json}}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "26b44709-93a9-407a-b19c-7078484ad88d",
+      "name": "Workflow Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3500,
+        1000
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "id": "d5d5d948-d0d5-4f1d-8590-f8595e8ee488",
+      "name": "Extract File Data",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        3620,
+        820
+      ]
+    },
+    {
+      "parameters": {
+        "filters": {},
+        "requestOptions": {}
+      },
+      "id": "a69575a8-7fea-458b-9454-1032e34c56c9",
+      "name": "Get Workflows",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        3140,
+        920
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "Xc4fO7KU69rhLS4n",
+          "name": "teste"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "data.id",
+              "field2": "data.id"
+            }
+          ]
+        },
+        "resolve": "preferInput2",
+        "options": {}
+      },
+      "id": "eaa18b71-6317-4eab-a7e4-02cb36718ae8",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        3820,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.id }}.json"
+        }
+      },
+      "id": "980ff46f-7641-47a0-b400-9966f1ea31dc",
+      "name": "Convert Update",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4280,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "mode": "each",
+        "options": {
+          "format": true,
+          "fileName": "={{ $json.id }}.json"
+        }
+      },
+      "id": "e8df907a-26aa-46df-b6f3-f1ee202bdb0b",
+      "name": "Convert New",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        4280,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "01795813-381b-4f60-8752-ced09c86c182",
+      "name": "Workflow Update",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4060,
+        980
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "d39922a0-ff4c-431a-bc09-53e2f85a6dbd",
+      "name": "Workflow New",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4060,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $('Data').first().json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $('Data').first().json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "=newstandard/{{ $('Workflow Update').item.json.id }}.json",
+        "binaryData": true,
+        "commitMessage": "={{ $('Workflow Update').item.json.name }} [{{ $now.setZone('UTC').toFormat('yyyy-MM-dd') }}T{{ $now.setZone('America/Sao_Paulo').toFormat('hh:mm') }}]"
+      },
+      "id": "29dceabb-b044-4ec7-9701-3c0720dfd815",
+      "name": "Edit File",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        4500,
+        980
+      ],
+      "credentials": {
+        "githubApi": {
+          "id": "2Ut60Rr0XFajvAxS",
+          "name": "teste"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Backup Diário ⏱️\nTodos os dias ele verifica alterações feitas nos workflows **caso existir** ele vai atualizar o arquivo com uma mensagem de commit do horário modificado, adicionando no histórico do arquivo, **caso não existir** ele vai criar esse arquivo com o ID único e o nome na mensagem de commit também.",
+        "height": 345.87209302325573,
+        "width": 603.7209302325588,
+        "color": 5
+      },
+      "id": "e3c2d611-c620-40e7-8d75-8300fe6a6759",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Verificação 🕵️‍♂️\n## Ele insere os dados do Workflow em um Nó e tenta achar o Workflow no repositório.\n### - A Branch: O arquivo existe apenas no GitHub, nada é feito.\n### - Same Branch: Workflow iguais não é feito nenhuma alteração.\n### - Differente Branch: Workflow diferentes vai ser atualizado o arquivo no repositório.\n### - B Branch: Workflow não existente no Github, ele vai criar o arquivo no repositório.\n",
+        "height": 717.9623169556924,
+        "width": 1406.0465116279076,
+        "color": 3
+      },
+      "id": "c23ba274-d2c5-4bce-b26d-9929f05edfa5",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3280,
+        575.0221595848219
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## [Restauração](https://hub.newstandard.com.br/workflow/Psqi7B0CHVhzg2Yo) 🔃🗂️\nSe existir a necessidade de voltar uma versão do Workflow, o GitHub cria **versionamentos em código SHA** que são únicos e usados para voltar históricos de versões.\nSó acessar o Workflow de restauração com o **nome ID**, o **caminho** no GitHub e o **código SHA** da versão do histórico a ser restaurada.",
+        "height": 150.56085023013338,
+        "width": 609.8430500738693
+      },
+      "id": "715772a5-ee1a-43cf-a36f-f404fb565680",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        1140
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 7 * * 1-6"
+            }
+          ]
+        }
+      },
+      "id": "60626124-0d7e-4029-83e9-d4105f2121e1",
+      "name": "Segunda a Sábado - 7AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        2700,
+        920
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Find File": {
+      "main": [
+        [
+          {
+            "node": "Extract File Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "Get Workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Data": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Extract File Data": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Workflows": {
+      "main": [
+        [
+          {
+            "node": "Workflow Data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Find File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [],
+        [],
+        [
+          {
+            "node": "Workflow Update",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Workflow New",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Update": {
+      "main": [
+        [
+          {
+            "node": "Edit File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert New": {
+      "main": [
+        [
+          {
+            "node": "Create File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Update": {
+      "main": [
+        [
+          {
+            "node": "Convert Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow New": {
+      "main": [
+        [
+          {
+            "node": "Convert New",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Segunda a Sábado - 7AM": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3a567417-9927-4d93-9540-9e1e44ab81ad",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a1b45cc3d5ab10aceb294cea22bc553c1178ae3e0a9d9818582f555df37c9806"
+  },
+  "id": "dXIB4epY2aQCHCqa",
+  "tags": [
+    {
+      "createdAt": "2025-03-04T20:19:22.358Z",
+      "updatedAt": "2025-03-04T20:19:22.358Z",
+      "id": "5Up3Tpe4BsM0EkzX",
+      "name": "Flavio"
+    }
+  ]
+}

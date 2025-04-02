@@ -1,0 +1,249 @@
+{
+  "name": "FERRAMENTA TESTE - Restauração GitHub",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a6d0615e-ada8-4497-a7ca-56b3bc3d80d1",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6011cc92-5bf7-4cba-b70e-98fc2013dc85",
+              "name": "file",
+              "value": "newstandard/tX6ZOgVATAdUCaAm.json",
+              "type": "string"
+            },
+            {
+              "id": "60b4f4a3-6094-45bf-903a-43d3780ca069",
+              "name": "owner",
+              "value": "NSFMagalhaes",
+              "type": "string"
+            },
+            {
+              "id": "157e10a3-dcde-4a1a-bfd0-5320ffa6377c",
+              "name": "repo",
+              "value": "backup-n8n",
+              "type": "string"
+            },
+            {
+              "id": "313a79eb-51b6-48e3-9552-43b816bb5289",
+              "name": "version",
+              "value": "85c2abbafc02f24b05a171ffbc9936ba482f4d17",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "57644b24-4e69-4b7d-ba5f-9767e4f6e0a0",
+      "name": "Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "id": "0dc44620-c194-4951-a231-e297b24abb84",
+      "name": "Extract from File",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1480,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "workflowId": {
+          "__rl": true,
+          "value": "={{ $json.data.id }}",
+          "mode": "id"
+        },
+        "workflowObject": "={{ JSON.stringify($json.data) }}",
+        "requestOptions": {}
+      },
+      "id": "0c13a45e-20f0-4237-9f50-bc1e559fc748",
+      "name": "Restore Workflow",
+      "type": "n8n-nodes-base.n8n",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        340
+      ],
+      "credentials": {
+        "n8nApi": {
+          "id": "Xc4fO7KU69rhLS4n",
+          "name": "teste"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "value": "={{ $json.owner }}",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "={{ $json.repo }}",
+          "mode": "name"
+        },
+        "filePath": "={{ $json.file }}",
+        "additionalParameters": {
+          "reference": "={{ $json.version }}"
+        }
+      },
+      "id": "13a1d84d-4654-4f74-8c07-70d64287735f",
+      "name": "File Versioning",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        340
+      ],
+      "credentials": {
+        "githubApi": {
+          "id": "2Ut60Rr0XFajvAxS",
+          "name": "teste"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# IMPORTANTE ⚠️\n### A restauração do Workflow sobrescreverá o fluxo atual dentro do N8N, mas nada impede depois de refazer essa mesma etapa para pegar outra versão mais antiga ou mais atual.\nDados obrigatórios:\n- ID (Nome arquivo no repositório)\n- Dono do Repositório\n- Caminho dentro do repositório (Barra depois do Usuário)\n- Commit ID (Código SHA completo)",
+        "height": 524.3242899699114,
+        "width": 1253.8810513072558
+      },
+      "id": "fee0349d-82c3-4293-b8bd-a97a38705fc2",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        690.7049248203432,
+        3.718280429130971
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Fluxo Manual\nInsira os dados no **Data**.",
+        "height": 249.60475775444024,
+        "width": 1199.9661921053407,
+        "color": 3
+      },
+      "id": "fc8ff373-4647-44f9-9d9b-9c03ff12a481",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        253
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# [Backup](https://hub.newstandard.com.br/workflow/dXIB4epY2aQCHCqa) 📝",
+        "height": 80,
+        "width": 229.78019826814597,
+        "color": 4
+      },
+      "id": "ff211a6e-e96a-4110-80b4-51deb7678fdc",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        140
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data": {
+      "main": [
+        [
+          {
+            "node": "File Versioning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Restore Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Versioning": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c046fc83-d7f2-4795-8769-a1b931cd4b32",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a1b45cc3d5ab10aceb294cea22bc553c1178ae3e0a9d9818582f555df37c9806"
+  },
+  "id": "Psqi7B0CHVhzg2Yo",
+  "tags": [
+    {
+      "createdAt": "2024-10-04T19:45:29.073Z",
+      "updatedAt": "2024-10-04T19:45:29.073Z",
+      "id": "OlLfDsX9yDuXeyE2",
+      "name": "Projeto exemplo"
+    },
+    {
+      "createdAt": "2025-03-04T20:19:22.358Z",
+      "updatedAt": "2025-03-04T20:19:22.358Z",
+      "id": "5Up3Tpe4BsM0EkzX",
+      "name": "Flavio"
+    }
+  ]
+}
