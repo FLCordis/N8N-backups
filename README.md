@@ -9,6 +9,7 @@ Este projeto contém um Workflow desenvolvido no N8N que sincroniza automaticame
 - Caso os arquivos sejam idênticos, nenhuma atualização é feita.
 - Se houver mudanças, os arquivos são atualizados e uma nova versão é criada.
 - Se o arquivo ainda não existir no repositório, ele é criado automaticamente.
+- Envio de notificação por e-mail do Status do backup.
 - Restauração do Workflow pelo versionamento do código.
 
 ## 🗃️ Como usar o Backup
