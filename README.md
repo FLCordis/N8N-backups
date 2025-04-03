@@ -12,7 +12,7 @@ Este projeto contém um Workflow desenvolvido no N8N que sincroniza automaticame
 - Restauração do Workflow pelo versionamento do código.
 
 ## 🗃️ Como usar o Backup
-![Backup](https://imgur.com/DicvhAz.png)
+![Backup](https://imgur.com/a/dc849LH.png)
 ### 1. Pré-requisitos
 
 ####  Certifique-se de ter os seguintes itens configurados:
@@ -20,6 +20,7 @@ Este projeto contém um Workflow desenvolvido no N8N que sincroniza automaticame
 - Um repositório no GitHub para armazenar os fluxos.
 - Credencial OAuth2.0 do GitHub salvo no N8N.
 - Credencial da API do N8N salva no usuário.
+- Credencial do Email (caso for usar essa feature).
 
 ### 2. Configuração do Workflow
 
