@@ -355,7 +355,7 @@
       "parameters": {
         "fromEmail": "teste",
         "toEmail": "teste",
-        "subject": "=Backup no repositório '{{ $('Data').first().json.repo }}' de {{ $now.toLocaleString() }} concluído! ✅",
+        "subject": "=Backup no repositório '{{ $('Data').first().json.repo }}' de {{ $now.toLocaleString('pt-BR') }} concluído! ✅",
         "html": "=<h1> Backups feito! 🗂️</h1>\n<body>\n<h2>Oque foi adicionado ou alterado? 🔃</h2>\n<p>\n{{ $json.projeto.map(item => `Nome: ${item.nome} | ID: ${item.id}`).join('<br><br>') }}\n</p>\n</body>\n<br><br>\n<footer>\n<h4>Abraço do Robozinho do Backup 🤖🤙</h4>\n<p>🪛 Criado por <a href=\"https://www.linkedin.com/in/flaviompcordis/\">Flávio Cordis</a> ⚙️</p>\n</footer>",
         "options": {}
       },
