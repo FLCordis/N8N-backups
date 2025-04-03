@@ -1,8 +1,9 @@
 {
-  "name": "FERRAMENTA TESTE - Backup GitHub",
+  "name": "FERRAMENTA - Daily Backup GitHub Repo",
   "nodes": [
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "owner": {
           "__rl": true,
@@ -14,7 +15,7 @@
           "value": "={{ $('Data').first().json.repo }}",
           "mode": "name"
         },
-        "filePath": "=newstandard/{{ $('Workflow New').item.json.id }}.json",
+        "filePath": "=n8n-workflows/{{ $('Workflow New').item.json.id }}.json",
         "binaryData": true,
         "commitMessage": "={{ $('Workflow New').item.json.name }} [{{ $now.setZone('UTC').toFormat('yyyy-MM-dd') }}T{{ $now.setZone('America/Sao_Paulo').toFormat('hh:mm') }}]"
       },
@@ -23,18 +24,19 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        4500,
-        1140
+        4680,
+        1141
       ],
       "credentials": {
-        "githubApi": {
-          "id": "2Ut60Rr0XFajvAxS",
+        "githubOAuth2Api": {
+          "id": "",
           "name": "teste"
         }
       }
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "operation": "get",
         "owner": {
@@ -55,14 +57,14 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        3400,
+        3580,
         820
       ],
       "alwaysOutputData": true,
       "credentials": {
-        "githubApi": {
-          "id": "2Ut60Rr0XFajvAxS",
-          "name": "teste"
+        "githubOAuth2Api": {
+          "id": "KcJBYGYmIMF18OwN",
+          "name": "Teste"
         }
       },
       "onError": "continueRegularOutput"
@@ -74,7 +76,7 @@
             {
               "id": "409c062f-1a22-4180-b5e0-5155e729e1bc",
               "name": "owner",
-              "value": "NSFMagalhaes",
+              "value": "FLCordis",
               "type": "string"
             },
             {
@@ -86,7 +88,7 @@
             {
               "id": "353765da-36cb-479b-b907-eb1cba3ea9bd",
               "name": "path",
-              "value": "newstandard/",
+              "value": "n8n-workflows/",
               "type": "string"
             }
           ]
@@ -122,7 +124,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3500,
+        3660,
         1000
       ]
     },
@@ -136,7 +138,7 @@
       "type": "n8n-nodes-base.extractFromFile",
       "typeVersion": 1,
       "position": [
-        3620,
+        3740,
         820
       ]
     },
@@ -155,8 +157,8 @@
       ],
       "credentials": {
         "n8nApi": {
-          "id": "Xc4fO7KU69rhLS4n",
-          "name": "teste"
+          "id": "5aAfgo1p92V1aRi5",
+          "name": "Teste"
         }
       }
     },
@@ -178,7 +180,7 @@
       "type": "n8n-nodes-base.compareDatasets",
       "typeVersion": 2.3,
       "position": [
-        3820,
+        3960,
         940
       ]
     },
@@ -196,8 +198,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        4280,
-        980
+        4460,
+        981
       ]
     },
     {
@@ -214,8 +216,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        4280,
-        1140
+        4460,
+        1141
       ]
     },
     {
@@ -229,8 +231,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4060,
-        980
+        4240,
+        981
       ]
     },
     {
@@ -244,12 +246,13 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4060,
-        1140
+        4240,
+        1141
       ]
     },
     {
       "parameters": {
+        "authentication": "oAuth2",
         "resource": "file",
         "operation": "edit",
         "owner": {
@@ -262,7 +265,7 @@
           "value": "={{ $('Data').first().json.repo }}",
           "mode": "name"
         },
-        "filePath": "=newstandard/{{ $('Workflow Update').item.json.id }}.json",
+        "filePath": "=n8n-workflows/{{ $('Workflow Update').item.json.id }}.json",
         "binaryData": true,
         "commitMessage": "={{ $('Workflow Update').item.json.name }} [{{ $now.setZone('UTC').toFormat('yyyy-MM-dd') }}T{{ $now.setZone('America/Sao_Paulo').toFormat('hh:mm') }}]"
       },
@@ -271,13 +274,13 @@
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
       "position": [
-        4500,
-        980
+        4680,
+        981
       ],
       "credentials": {
-        "githubApi": {
-          "id": "2Ut60Rr0XFajvAxS",
-          "name": "teste"
+        "githubOAuth2Api": {
+          "id": "KcJBYGYmIMF18OwN",
+          "name": "Teste"
         }
       }
     },
@@ -285,7 +288,7 @@
       "parameters": {
         "content": "## Backup Diário ⏱️\nTodos os dias ele verifica alterações feitas nos workflows **caso existir** ele vai atualizar o arquivo com uma mensagem de commit do horário modificado, adicionando no histórico do arquivo, **caso não existir** ele vai criar esse arquivo com o ID único e o nome na mensagem de commit também.",
         "height": 345.87209302325573,
-        "width": 603.7209302325588,
+        "width": 614.2675144433018,
         "color": 5
       },
       "id": "e3c2d611-c620-40e7-8d75-8300fe6a6759",
@@ -301,7 +304,7 @@
       "parameters": {
         "content": "# Verificação 🕵️‍♂️\n## Ele insere os dados do Workflow em um Nó e tenta achar o Workflow no repositório.\n### - A Branch: O arquivo existe apenas no GitHub, nada é feito.\n### - Same Branch: Workflow iguais não é feito nenhuma alteração.\n### - Differente Branch: Workflow diferentes vai ser atualizado o arquivo no repositório.\n### - B Branch: Workflow não existente no Github, ele vai criar o arquivo no repositório.\n",
         "height": 717.9623169556924,
-        "width": 1406.0465116279076,
+        "width": 1553.1585556695795,
         "color": 3
       },
       "id": "c23ba274-d2c5-4bce-b26d-9929f05edfa5",
@@ -315,9 +318,9 @@
     },
     {
       "parameters": {
-        "content": "## [Restauração](https://hub.newstandard.com.br/workflow/Psqi7B0CHVhzg2Yo) 🔃🗂️\nSe existir a necessidade de voltar uma versão do Workflow, o GitHub cria **versionamentos em código SHA** que são únicos e usados para voltar históricos de versões.\nSó acessar o Workflow de restauração com o **nome ID**, o **caminho** no GitHub e o **código SHA** da versão do histórico a ser restaurada.",
-        "height": 150.56085023013338,
-        "width": 609.8430500738693
+        "content": "## [Restauração](https://hub.n8n-workflows.com.br/workflow/Psqi7B0CHVhzg2Yo) 🔃🗂️\nSe existir a necessidade de voltar uma versão do Workflow, o GitHub cria **versionamentos em código SHA** que são únicos e usados para voltar históricos de versões.\nSó acessar o Workflow de restauração com o **nome ID**, o **caminho** no GitHub e o **código SHA** da versão do histórico a ser restaurada.",
+        "height": 157.94345917765344,
+        "width": 616.1710006003154
       },
       "id": "715772a5-ee1a-43cf-a36f-f404fb565680",
       "name": "Sticky Note2",
@@ -325,7 +328,7 @@
       "typeVersion": 1,
       "position": [
         2660,
-        1140
+        1132.6173910524803
       ]
     },
     {
@@ -345,6 +348,111 @@
       "typeVersion": 1.2,
       "position": [
         2700,
+        920
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "teste",
+        "toEmail": "teste",
+        "subject": "=Backup no repositório '{{ $('Data').first().json.repo }}' de {{ $now.toLocaleString() }} concluído! ✅",
+        "html": "=<h1> Backups feito! 🗂️</h1>\n<body>\n<h2>Oque foi adicionado ou alterado? 🔃</h2>\n<p>\n{{ $json.projeto.map(item => `Nome: ${item.nome} | ID: ${item.id}`).join('<br><br>') }}\n</p>\n</body>\n<br><br>\n<footer>\n<h4>Abraço do Robozinho do Backup 🤖🤙</h4>\n<p>🪛 Criado por <a href=\"https://www.linkedin.com/in/flaviompcordis/\">Flávio Cordis</a> ⚙️</p>\n</footer>",
+        "options": {}
+      },
+      "id": "c1d7339e-5332-4abc-a4f7-848df6872f40",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        5620,
+        1061
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "KHHuQhqwerUJX3Gn",
+          "name": "Teste"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "319b42b5-f683-4e19-8679-5ec9db0eb7ef",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        5220,
+        1061
+      ]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "6e9e8a4a-d376-4e2a-be6f-9d46d66a44b6",
+      "name": "Commits Update",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        4900,
+        981
+      ]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "id": "c8db646b-16f4-40c3-a6c8-738c230ee9c7",
+      "name": "Commits Create",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        4900,
+        1141
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "var commits = $input.first().json.data\nconsole.log(commits)\nvar id = [], projetos = []\n\nvar data = commits.map(item => {\n  return {\n    nome: item.commit.message,\n    id: item.content.name\n  }\n})\n\nreturn {\n  projeto: data\n}"
+      },
+      "id": "e7e5c5d8-e000-4ac9-a3da-fc99301d2e0d",
+      "name": "Backup Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5420,
+        1061
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Envio das alterações via e-mail\nEnviamos um e-mail pela API do [Resend](https://resend.com/).",
+        "height": 393.5866268919616,
+        "width": 953.1304008010214,
+        "color": 4
+      },
+      "id": "e310eabb-8fc5-4d5e-ba5b-0904d6272b0c",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        4835.6860341415395,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "var data = $input.item.json\ndelete data.tags\n\nreturn data;"
+      },
+      "id": "68934512-6315-4bc6-94a1-6973f32cd1c0",
+      "name": "Remover Tags",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3340,
         920
       ]
     }
@@ -399,12 +507,7 @@
       "main": [
         [
           {
-            "node": "Workflow Data",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Find File",
+            "node": "Remover Tags",
             "type": "main",
             "index": 0
           }
@@ -485,13 +588,95 @@
           }
         ]
       ]
+    },
+    "Edit File": {
+      "main": [
+        [
+          {
+            "node": "Commits Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create File": {
+      "main": [
+        [
+          {
+            "node": "Commits Create",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Backup Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commits Update": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commits Create": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Backup Message": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remover Tags": {
+      "main": [
+        [
+          {
+            "node": "Find File",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Workflow Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "3a567417-9927-4d93-9540-9e1e44ab81ad",
+  "versionId": "b1365edc-068c-40ba-ab7d-5283e075413f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a1b45cc3d5ab10aceb294cea22bc553c1178ae3e0a9d9818582f555df37c9806"
